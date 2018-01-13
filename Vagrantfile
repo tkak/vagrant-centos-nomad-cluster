@@ -2,7 +2,6 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "centos/7"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -18,11 +17,6 @@ Vagrant.configure("2") do |config|
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   # config.vm.network "private_network", ip: "192.168.33.10"
-
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network "public_network"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -41,11 +35,40 @@ Vagrant.configure("2") do |config|
   chef_server = ENV['CHEF_SERVER']
   chef_server ||= 'manage.chef.io'
 
-  config.vm.provision "chef_client" do |chef|
-    chef.chef_server_url = "https://#{chef_server}/organizations/#{ENV['CHEF_ORG']}"
-    chef.validation_client_name = "#{ENV['CHEF_ORG']}-validator"
-    chef.validation_key_path = "#{ENV['HOME']}/.chef/#{ENV['CHEF_VALIDATION_FILE']}"
-    chef.delete_node = true
-    chef.delete_client = true
+  config.vm.define 'server' do |node|
+    node.vm.box = "bento/centos-7"
+    node.vm.network "private_network", ip: "192.168.33.11"
+    node.vm.provision "chef_client" do |chef|
+      chef.chef_server_url = "https://#{chef_server}/organizations/#{ENV['CHEF_ORG']}"
+      chef.validation_client_name = "#{ENV['CHEF_ORG']}-validator"
+      chef.validation_key_path = "#{ENV['HOME']}/.chef/#{ENV['CHEF_VALIDATION_FILE']}"
+      chef.json = {
+      }
+      chef.add_role 'nomad-server'
+      chef.delete_node = true
+      chef.delete_client = true
+    end
+  end
+
+  config.vm.define 'client' do |node|
+    node.vm.box = "bento/centos-7"
+    node.vm.network "private_network", ip: "192.168.33.12"
+    node.vm.provision "chef_client" do |chef|
+      chef.chef_server_url = "https://#{chef_server}/organizations/#{ENV['CHEF_ORG']}"
+      chef.validation_client_name = "#{ENV['CHEF_ORG']}-validator"
+      chef.validation_key_path = "#{ENV['HOME']}/.chef/#{ENV['CHEF_VALIDATION_FILE']}"
+      chef.json = {
+        'nomad-cluster': {
+          config: {
+            server: {
+              enabled: false
+            }
+          }
+        }
+      }
+      chef.add_recipe 'nomad-cluster'
+      chef.delete_node = true
+      chef.delete_client = true
+    end
   end
 end
