@@ -1,0 +1,8 @@
+{
+    "id": "nomad-cluster",
+    "run_list": ["recipe[nomad-cluster]"],
+    "automatic": {
+        "ipaddress": "10.0.2.15",
+        "roles": ["nomad-server"]
+    }
+}

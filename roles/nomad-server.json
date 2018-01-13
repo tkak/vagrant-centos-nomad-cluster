@@ -1,0 +1,23 @@
+{
+    "name": "nomad-server",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "default_attributes": {
+        "nomad-cluster": {
+            "consul": {
+                "search_query": "roles:nomad-server"
+            }
+        },
+        "nomad": {
+            "config": {
+                "server": {
+                    "enabled": true
+                }
+            }
+        }
+    },
+    "description": "The role for nomad server",
+    "run_list": [
+        "recipe[nomad-cluster]"
+    ]
+}
