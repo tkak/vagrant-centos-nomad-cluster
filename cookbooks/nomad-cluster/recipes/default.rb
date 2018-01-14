@@ -41,3 +41,4 @@ node.default['nomad']['config']['consul']['address'] = "#{private_ipaddress}:850
 
 include_recipe 'consul::default'
 include_recipe 'nomad-agent::default'
+include_recipe 'chef-client::default'

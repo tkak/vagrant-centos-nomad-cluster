@@ -10,3 +10,5 @@ default['consul']['config']['ports'] = {
   'server'   => 8300,
 }
 default['nomad-cluster']['consul']['search_query'] = ''
+default['chef_client']['interval'] = 300
+default['chef_client']['splay'] = 60
