@@ -2,6 +2,229 @@
     "id": "nomad-cluster",
     "run_list": ["recipe[nomad-cluster]"],
     "automatic": {
+        "network": {
+            "interfaces": {
+                "lo": {
+                    "mtu": "65536",
+                    "flags": [
+                        "LOOPBACK",
+                        "UP",
+                        "LOWER_UP"
+                    ],
+                    "encapsulation": "Loopback",
+                    "addresses": {
+                        "127.0.0.1": {
+                            "family": "inet",
+                            "prefixlen": "8",
+                            "netmask": "255.0.0.0",
+                            "scope": "Node"
+                        },
+                        "::1": {
+                            "family": "inet6",
+                            "prefixlen": "128",
+                            "scope": "Node",
+                            "tags": [
+
+                            ]
+                        }
+                    },
+                    "state": "unknown",
+                    "routes": [
+                        {
+                            "destination": "unreachable",
+                            "family": "inet6",
+                            "metric": "1024"
+                        },
+                        {
+                            "destination": "unreachable",
+                            "family": "inet6",
+                            "metric": "1024"
+                        },
+                        {
+                            "destination": "unreachable",
+                            "family": "inet6",
+                            "metric": "1024"
+                        },
+                        {
+                            "destination": "unreachable",
+                            "family": "inet6",
+                            "metric": "1024"
+                        },
+                        {
+                            "destination": "unreachable",
+                            "family": "inet6",
+                            "metric": "1024"
+                        },
+                        {
+                            "destination": "unreachable",
+                            "family": "inet6",
+                            "metric": "1024"
+                        },
+                        {
+                            "destination": "unreachable",
+                            "family": "inet6",
+                            "metric": "1024"
+                        },
+                        {
+                            "destination": "unreachable",
+                            "family": "inet6",
+                            "metric": "1024"
+                        },
+                        {
+                            "destination": "unreachable",
+                            "family": "inet6",
+                            "metric": "1024"
+                        }
+                    ]
+                },
+                "enp0s3": {
+                    "type": "enp0s",
+                    "number": "3",
+                    "mtu": "1500",
+                    "flags": [
+                        "BROADCAST",
+                        "MULTICAST",
+                        "UP",
+                        "LOWER_UP"
+                    ],
+                    "encapsulation": "Ethernet",
+                    "addresses": {
+                        "08:00:27:16:98:18": {
+                            "family": "lladdr"
+                        },
+                        "10.0.2.15": {
+                            "family": "inet",
+                            "prefixlen": "24",
+                            "netmask": "255.255.255.0",
+                            "broadcast": "10.0.2.255",
+                            "scope": "Global"
+                        },
+                        "fe80::d99b:7ddf:f24c:3b11": {
+                            "family": "inet6",
+                            "prefixlen": "64",
+                            "scope": "Link",
+                            "tags": [
+
+                            ]
+                        }
+                    },
+                    "state": "up",
+                    "arp": {
+                        "10.0.2.3": "52:54:00:12:35:03",
+                        "10.0.2.2": "52:54:00:12:35:02"
+                    },
+                    "routes": [
+                        {
+                            "destination": "default",
+                            "family": "inet",
+                            "via": "10.0.2.2",
+                            "metric": "100",
+                            "proto": "static"
+                        },
+                        {
+                            "destination": "10.0.2.0/24",
+                            "family": "inet",
+                            "scope": "link",
+                            "metric": "100",
+                            "proto": "kernel",
+                            "src": "10.0.2.15"
+                        },
+                        {
+                            "destination": "fe80::/64",
+                            "family": "inet6",
+                            "metric": "256",
+                            "proto": "kernel"
+                        }
+                    ],
+                    "link_speed": 1000,
+                    "duplex": "Full",
+                    "port": "Twisted Pair",
+                    "transceiver": "internal",
+                    "auto_negotiation": "on",
+                    "mdi_x": "off (auto)",
+                    "ring_params": {
+                        "max_rx": 4096,
+                        "max_rx_mini": 0,
+                        "max_rx_jumbo": 0,
+                        "max_tx": 4096,
+                        "current_rx": 256,
+                        "current_rx_mini": 0,
+                        "current_rx_jumbo": 0,
+                        "current_tx": 256
+                    }
+                },
+                "enp0s8": {
+                    "type": "enp0s",
+                    "number": "8",
+                    "mtu": "1500",
+                    "flags": [
+                        "BROADCAST",
+                        "MULTICAST",
+                        "UP",
+                        "LOWER_UP"
+                    ],
+                    "encapsulation": "Ethernet",
+                    "addresses": {
+                        "08:00:27:EA:BE:5D": {
+                            "family": "lladdr"
+                        },
+                        "192.168.33.11": {
+                            "family": "inet",
+                            "prefixlen": "24",
+                            "netmask": "255.255.255.0",
+                            "broadcast": "192.168.33.255",
+                            "scope": "Global"
+                        },
+                        "fe80::a00:27ff:feea:be5d": {
+                            "family": "inet6",
+                            "prefixlen": "64",
+                            "scope": "Link",
+                            "tags": [
+
+                            ]
+                        }
+                    },
+                    "state": "up",
+                    "arp": {
+                        "192.168.33.12": "08:00:27:45:85:d9"
+                    },
+                    "routes": [
+                        {
+                            "destination": "192.168.33.0/24",
+                            "family": "inet",
+                            "scope": "link",
+                            "metric": "100",
+                            "proto": "kernel",
+                            "src": "192.168.33.11"
+                        },
+                        {
+                            "destination": "fe80::/64",
+                            "family": "inet6",
+                            "metric": "256",
+                            "proto": "kernel"
+                        }
+                    ],
+                    "link_speed": 1000,
+                    "duplex": "Full",
+                    "port": "Twisted Pair",
+                    "transceiver": "internal",
+                    "auto_negotiation": "on",
+                    "mdi_x": "off (auto)",
+                    "ring_params": {
+                        "max_rx": 4096,
+                        "max_rx_mini": 0,
+                        "max_rx_jumbo": 0,
+                        "max_tx": 4096,
+                        "current_rx": 256,
+                        "current_rx_mini": 0,
+                        "current_rx_jumbo": 0,
+                        "current_tx": 256
+                    }
+                }
+            },
+            "default_interface": "enp0s3",
+            "default_gateway": "10.0.2.2"
+        },
         "ipaddress": "10.0.2.15",
         "roles": ["nomad-server"]
     }
